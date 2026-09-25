@@ -1,4 +1,4 @@
-const apiKey = "<API KEY>"; // ganti dengan API key dari openweathermap.org
+const apiKey = "c6f7002ec2704572886a4ad382eb2c9c";
 const favoritesKey = "weatherFavorites";
 const darkModeKey = "weatherDarkMode";
 const unitKey = "weatherUnit";
