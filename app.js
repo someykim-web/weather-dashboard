@@ -136,12 +136,16 @@ function applyDarkMode(isDark) {
 }
 
 function displayCurrent(data) {
+  const icon = data.weather[0].icon;
   $("#currentWeather").html(`
-    <div class="card p-3 shadow-sm">
-      <h3>${data.name}</h3>
-      <p>${data.weather[0].description}</p>
-      <h2>${formatTemp(data.main.temp)}</h2>
-      <p>Humidity: ${data.main.humidity}% | Wind: ${data.wind.speed} m/s</p>
+    <div class="weather-hero">
+      <div>
+        <h3 class="city">${data.name}, ${data.sys.country}</h3>
+        <p class="desc">${data.weather[0].description}</p>
+        <h2 class="temp">${formatTemp(data.main.temp)}</h2>
+        <p class="meta">Terasa ${formatTemp(data.main.feels_like)} · Humidity: ${data.main.humidity}% · Wind: ${data.wind.speed} m/s</p>
+      </div>
+      <img src="https://openweathermap.org/img/wn/${icon}@4x.png" alt="${data.weather[0].description}">
     </div>`);
 }
 
@@ -152,9 +156,13 @@ function displayForecast(list) {
   let html = "";
 
   days.forEach((d) => {
-    const date = new Date(d.dt * 1000).toLocaleDateString();
+    const date = new Date(d.dt * 1000).toLocaleDateString("id-ID", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+    });
     html += `
-      <div class="col-md forecast-card">
+      <div class="col-6 col-md forecast-card">
         <div class="card p-2 text-center">
           <h6>${date}</h6>
           <img src="https://openweathermap.org/img/wn/${d.weather[0].icon}@2x.png" alt="${d.weather[0].description}" class="mx-auto">
@@ -191,11 +199,16 @@ function loadFavorites() {
   // Soal 2a: setiap item punya tombol X
   const $list = $("#favorites").empty();
 
+  if (favs.length === 0) {
+    $list.append('<li class="fav-empty">Belum ada. Kota yang kamu cari akan tersimpan di sini.</li>');
+    return;
+  }
+
   favs.forEach((c) => {
     const $li = $(`
-      <li class="list-group-item list-group-item-action fav-item d-flex justify-content-between align-items-center">
+      <li class="fav-item">
         <span></span>
-        <button type="button" class="btn btn-sm btn-outline-danger btn-delete" title="Hapus">&times;</button>
+        <button type="button" class="btn-delete" title="Hapus dari favorit" aria-label="Hapus">&times;</button>
       </li>`);
     $li.attr("data-city", c);
     $li.find("span").text(c); // .text() agar aman dari HTML injection

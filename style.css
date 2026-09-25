@@ -1,28 +1,175 @@
-#currentWeather .card {
-  background: #e0f7fa;
+/* ===== Warna (light) ===== */
+:root {
+  --bg: #f3efe8;
+  --panel: #ffffff;
+  --ink: #1f2a37;
+  --muted: #6b7280;
+  --line: #e6e0d6;
+  --accent: #e8683f;       /* oranye matahari */
+  --accent-ink: #ffffff;
+  --hero-from: #ffb36b;
+  --hero-to: #e8683f;
+  --chip: #fbeee6;
 }
 
-.forecast-card {
-  min-width: 150px;
+/* ===== Warna (dark) - Soal 4, Bootstrap 5.3 memakai data-bs-theme ===== */
+[data-bs-theme="dark"] {
+  --bg: #141821;
+  --panel: #1e2430;
+  --ink: #eef1f6;
+  --muted: #9aa3b2;
+  --line: #2c3442;
+  --accent: #ff8a5c;
+  --accent-ink: #141821;
+  --hero-from: #2b3a67;
+  --hero-to: #54407a;
+  --chip: #2a3140;
 }
 
-/* Favorites: nama kota bisa diklik, tombol X untuk hapus (Soal 2) */
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  transition: background-color .25s, color .25s;
+}
+
+.app { max-width: 960px; }
+
+.app-title {
+  font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  letter-spacing: -0.02em;
+}
+.app-sub { color: var(--muted); }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+}
+
+.section-label {
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--muted);
+}
+
+/* Input & tombol */
+.form-control {
+  background: var(--bg);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.form-control:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 .2rem rgba(232, 104, 63, .25);
+  background: var(--bg);
+  color: var(--ink);
+}
+.btn-search {
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  border: none;
+}
+.btn-search:hover,
+.btn-search:focus {
+  background: var(--accent);
+  color: var(--accent-ink);
+  filter: brightness(.93);
+}
+.btn-theme {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.form-check-input:checked { background-color: var(--accent); border-color: var(--accent); }
+
+/* Favorites berbentuk chip (Soal 2) */
+.fav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 #favorites .fav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--chip);
+  border-radius: 999px;
+  padding: 4px 6px 4px 14px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: .9rem;
 }
-
+#favorites .fav-item:hover { outline: 2px solid var(--accent); }
 #favorites .btn-delete {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
   line-height: 1;
+  padding: 0;
+  font-size: 1.1rem;
+}
+#favorites .btn-delete:hover { background: #dc3545; color: #fff; }
+.fav-empty { color: var(--muted); font-size: .9rem; }
+
+/* Cuaca saat ini */
+.weather-hero {
+  background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+  color: #fff;
+  border-radius: 22px;
+  padding: 24px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.weather-hero .city { font-weight: 800; font-size: 1.6rem; margin: 0; }
+.weather-hero .desc { text-transform: capitalize; opacity: .9; margin: 0; }
+.weather-hero .temp {
+  font-weight: 800;
+  font-size: clamp(2.8rem, 8vw, 4rem);
+  line-height: 1;
+  margin: 12px 0;
+  letter-spacing: -0.03em;
+}
+.weather-hero .meta { opacity: .9; margin: 0; font-size: .95rem; }
+.weather-hero img { width: 120px; height: 120px; filter: drop-shadow(0 6px 12px rgba(0,0,0,.2)); }
+
+.empty-state {
+  border: 2px dashed var(--line);
+  border-radius: 22px;
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted);
 }
 
-/* Dark mode (Soal 4) - Bootstrap 5.3 memakai atribut data-bs-theme="dark" */
-[data-bs-theme="dark"] #currentWeather .card {
-  background: #0b3a44;
-  color: #e0f7fa;
+/* Prakiraan 5 hari */
+.forecast-card { min-width: 140px; }
+.forecast-card .card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  color: var(--ink);
 }
+.forecast-card h6 { color: var(--muted); font-weight: 600; margin: 0; }
+.forecast-card p { font-weight: 700; margin: 0; }
+.forecast-card img { width: 64px; height: 64px; display: block; margin: 4px auto; }
 
 [data-bs-theme="dark"] .forecast-card img {
-  /* ikon OpenWeather berwarna gelap, beri latar agar tetap terlihat */
-  background: #dee2e6;
+  background: rgba(255,255,255,.12);
   border-radius: 50%;
+}
+
+@media (max-width: 576px) {
+  .weather-hero { padding: 20px; }
+  .weather-hero img { width: 84px; height: 84px; }
 }
