@@ -1,0 +1,28 @@
+#currentWeather .card {
+  background: #e0f7fa;
+}
+
+.forecast-card {
+  min-width: 150px;
+}
+
+/* Favorites: nama kota bisa diklik, tombol X untuk hapus (Soal 2) */
+#favorites .fav-item {
+  cursor: pointer;
+}
+
+#favorites .btn-delete {
+  line-height: 1;
+}
+
+/* Dark mode (Soal 4) - Bootstrap 5.3 memakai atribut data-bs-theme="dark" */
+[data-bs-theme="dark"] #currentWeather .card {
+  background: #0b3a44;
+  color: #e0f7fa;
+}
+
+[data-bs-theme="dark"] .forecast-card img {
+  /* ikon OpenWeather berwarna gelap, beri latar agar tetap terlihat */
+  background: #dee2e6;
+  border-radius: 50%;
+}
